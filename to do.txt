@@ -1,0 +1,9 @@
+can only track workout 1 now, make it track workouts 2-4 also
+
+use writeToFile method to save measurements to a file (probably name it “measurements.txt”)
+
+read measurements from file and display them in the chart
+
+implement various error checking code
+
+after all the backend stuff is done, redo the placeholder gui

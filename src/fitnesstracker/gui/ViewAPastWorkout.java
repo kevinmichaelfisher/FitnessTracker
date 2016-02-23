@@ -40,9 +40,8 @@ public class ViewAPastWorkout {
 			homepage.initGUI();
 		}
 		else {
-			String[] arrayForJList = new String[workoutList.size()/37]; 	/* this will create an array where the first two elements
-																					are the date and workout number of the first workout
-																					in the list, and so on
+			String[] arrayForJList = new String[workoutList.size()/37]; 	/* this will create an array where one element will contain
+																					the date and workout number of each workout
 																			*/
 			
 			JPanel mainPanel = new JPanel();
