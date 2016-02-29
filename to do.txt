@@ -1,4 +1,4 @@
-can only track workout 1 now, make it track workouts 2-4 also
+(DONE_ can only track workout 1 now, make it track workouts 2-4 also
 
 use writeToFile method to save measurements to a file (probably name it “measurements.txt”)
 

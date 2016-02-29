@@ -1,0 +1,74 @@
+11/11/11
+Workout 1
+Squat
+2
+1
+1
+1
+1
+1
+1
+Bench Press
+2
+1
+1
+1
+1
+Deadlift
+2
+1
+1
+1
+1
+Overhead Press
+2
+1
+1
+1
+1
+Lat Pulldown
+2
+1
+Row
+2
+1
+Bicep Curl
+2
+1
+22/22/22
+Workout 2
+Overhead Press
+2
+1
+1
+1
+1
+1
+1
+Squat
+2
+1
+1
+1
+1
+Bench Press
+2
+1
+1
+1
+1
+Deadlift
+2
+1
+1
+1
+1
+45 Degree Back Raise
+2
+1
+Leg Extension
+2
+1
+Leg Curl
+2
+1
