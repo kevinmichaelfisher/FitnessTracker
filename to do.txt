@@ -1,5 +1,9 @@
 (DONE_ can only track workout 1 now, make it track workouts 2-4 also
 
+make sure everything obeys single responsibility principle
+
+would it help to create an interface for a “page” and have all other pages inherit from it
+
 use writeToFile method to save measurements to a file (probably name it “measurements.txt”)
 
 read measurements from file and display them in the chart
