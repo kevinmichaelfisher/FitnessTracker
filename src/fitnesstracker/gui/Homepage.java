@@ -3,11 +3,22 @@ package fitnesstracker.gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -34,18 +45,33 @@ public class Homepage {
 		frame = new JFrame("Fitness Tracker");
 		
 		JPanel jp = new JPanel();
+		jp.addComponentListener(new ResizeListener());
 		GridLayout gl1 = new GridLayout(2,0);
 		jp.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		jp.setLayout(gl1);
 			 
 		JLabel jl1 = new JLabel();
 		//jl1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		jl1.setLayout(new BorderLayout());
+		jl1.setLayout(new BoxLayout(jl1, BoxLayout.PAGE_AXIS));
+		////fitnesstrackertext.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		//fitnesstrackertext.setHorizontalAlignment(JLabel.CENTER);
+		BufferedImage myPicture;
+		try {
+			myPicture = ImageIO.read(new File("barbell.png"));
+			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+			picLabel.setAlignmentX((float) 0.5);
+			//fitnesstrackertext.add(picLabel);
+			jl1.add(picLabel);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		JLabel fitnesstrackertext = new JLabel();
 		fitnesstrackertext.setText("Fitness Tracker");
-		//fitnesstrackertext.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		fitnesstrackertext.setHorizontalAlignment(JLabel.CENTER);
-		jl1.add(fitnesstrackertext, BorderLayout.CENTER);
+		fitnesstrackertext.setFont(new Font("Arial", Font.BOLD, 50));
+		fitnesstrackertext.setAlignmentX((float) 0.5);
+		jl1.add(fitnesstrackertext);
+
 		jp.add(jl1);
 		
 		
@@ -149,6 +175,34 @@ public class Homepage {
 				p.initGUI();
 			}
 		}
+	}
+	
+	private class ResizeListener implements ComponentListener {
+
+		@Override
+		public void componentResized(ComponentEvent e) {
+			Homepage h = new Homepage(frame);
+			h.initGUI();
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 }

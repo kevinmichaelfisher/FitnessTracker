@@ -1,0 +1,2 @@
+3/17/16 1:50 AM
+Added barbell graphic, code to put it on page

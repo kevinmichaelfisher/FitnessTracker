@@ -11,3 +11,5 @@ read measurements from file and display them in the chart
 implement various error checking code
 
 after all the backend stuff is done, redo the placeholder gui
+
+redo with mvc structure?
