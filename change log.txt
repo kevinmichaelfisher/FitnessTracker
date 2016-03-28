@@ -1,2 +1,6 @@
 3/17/16 1:50 AM
 Added barbell graphic, code to put it on page
+
+3/20/16
+-Changed startApp() in Driver class to createWindow() and changed initGui() in all other classes to displayPage() because it makes more sense
+-Changed packages: fitnesstracker.gui to fitnesstracker.view, fitnesstracker.logic to fitnesstracker.model, added fitnesstracker.controller to restructure app to MVC

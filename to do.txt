@@ -13,3 +13,15 @@ implement various error checking code
 after all the backend stuff is done, redo the placeholder gui
 
 redo with mvc structure?
+  model=observable, view=observer
+    this means any time the model changes, it notifies the view, which can then update the guy
+  view=observable, controller=observer
+    this means whenever something happens in the view (like a save button click), the data in say a form a user filled out is gotten from the view and passed to the controller, which then can pass to the model and write to file or something
+  controller=actionlistener
+    set the action listener of each button, etc. to be an instance of the controller
+
+have view create an event object and send it to controller
+  have each event object extend eventobject
+  some event happens in view -> view creates the specific event that happened (e.g. AddWorkoutEvent) -> send that event to controller (view observable, controller observer? controller needs to listen to view somehow)
+  
+right now every class = one guy screen, so one “screen” class has references to a bunch of other “screen” classes…def gotta fix.  Maybe have one class startApp() and create all the screens and just set visability to true?
