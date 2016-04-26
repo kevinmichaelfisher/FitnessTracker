@@ -1,4 +1,4 @@
-package fitnesstracker.view.gui;
+package fitnesstracker.view;
 
 import java.awt.FlowLayout;
 
@@ -551,6 +551,8 @@ public class TrackAWorkout {
 				//to write the workout to the file in the iohandler the joptionpane will still pop up
 				//so I need to detect if the throw blocks get triggered in the writeToDocument method
 				//if they don't, the save was successful, if they do it wasn't
+				//make write to document an exception i.e. add "throws someException" to the end of the signature
+				//then wrap the above line of code (io.writeToDocument(data, "workouts.txt");) in a try block
 				JOptionPane.showMessageDialog(frame, "Workout successfully logged!");
 				Homepage homepage = new Homepage(frame);
 				homepage.displayPage();

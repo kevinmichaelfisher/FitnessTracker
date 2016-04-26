@@ -1,3 +1,5 @@
+//would be a good idea to make writeToDocument and readFromDocument throw exceptions if they fail
+
 package fitnesstracker.model;
 
 import java.io.BufferedReader;

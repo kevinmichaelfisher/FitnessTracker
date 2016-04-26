@@ -1,4 +1,4 @@
-package fitnesstracker.view.gui;
+package fitnesstracker.view;
 
 import java.awt.Dimension;
 import java.text.DateFormat;

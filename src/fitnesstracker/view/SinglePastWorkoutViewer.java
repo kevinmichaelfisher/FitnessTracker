@@ -1,4 +1,4 @@
-package fitnesstracker.view.gui;
+package fitnesstracker.view;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
