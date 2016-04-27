@@ -91,7 +91,7 @@ public class guiCardLayout {
 		JButton homepage_button_trackAMeasurement = new JButton("Track a measurement");
 		//homepage_button_trackAMeasurement.addActionListener(new ButtonListener());
 		homepage_label_mainButtonsArea.add(homepage_button_trackAMeasurement);
-		 
+		
 		JButton homepage_button_viewAPastMeasurement = new JButton("View measurement progress");
 		//homepage_button_viewAPastMeasurement.addActionListener(new ButtonListener());
 		homepage_label_mainButtonsArea.add(homepage_button_viewAPastMeasurement);

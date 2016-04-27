@@ -2,11 +2,7 @@
 
 make sure everything obeys single responsibility principle
 
-would it help to create an interface for a “page” and have all other pages inherit from it
-
-use writeToFile method to save measurements to a file (probably name it “measurements.txt”)
-
-read measurements from file and display them in the chart
+read measurements from db and display them in the chart
 
 implement various error checking code
 
@@ -15,13 +11,52 @@ after all the backend stuff is done, redo the placeholder gui
 redo with mvc structure?
   model=observable, view=observer
     this means any time the model changes, it notifies the view, which can then update the guy
-  view=observable, controller=observer
-    this means whenever something happens in the view (like a save button click), the data in say a form a user filled out is gotten from the view and passed to the controller, which then can pass to the model and write to file or something
   controller=actionlistener
     set the action listener of each button, etc. to be an instance of the controller
-
-have view create an event object and send it to controller
-  have each event object extend eventobject
-  some event happens in view -> view creates the specific event that happened (e.g. AddWorkoutEvent) -> send that event to controller (view observable, controller observer? controller needs to listen to view somehow)
   
-right now every class = one guy screen, so one “screen” class has references to a bunch of other “screen” classes…def gotta fix.  Maybe have one class startApp() and create all the screens and just set visability to true?
+4/27/16
+
+save everything in a SQLite db
+
+mvc ideas
+Controllers will implement ActionListener
+Have two controllers: guiController and applicationDataController
+If the component triggered (button in my case) only changes the gui and doesn't need to interact with 
+	the model (e.g. a button is pressed that only switches screens), attach a guiController to it. The
+	guiController will then eventually call a method in guiCardLayout that will change to the appropriate
+	card.
+If the component triggered has to interact with the model (reading/writing from db), then attach a
+	applicationDataController to it. If it's a read event, the applicationDataController will need to 
+	determine what information will need to be read, then access the model to get that info. If it's a 
+	write event, then the controller will need to access guiCardLayout first to get this information. 
+	Probably do this by having a method for each "form" in the program, and if that method is called,
+	it will gather all the info from the appropriate J components and return it (e.g. 
+	getSaveAWorkoutFormInfo will access all of the JTextFields in the SaveAWorkout form). Once the
+	applicationDataController has all of this information, it will pass it on to the model, who then
+	decides what to do.
+	
+This all assumes that some parts of the mvc have references to other parts:
+guiCardLayout will have a reference to each of the controllers.
+	It will have a method called addController(controller) which will add a controller to some buttons
+		as a listener.
+	Any button created will either have a guiController or applicationDataController as an event listener
+Each controller will have a reference to guiCardLayout and any appropriate models
+	They will have a method called addModel(model) and addView(view)
+Models don't have references to either.  Models will extend Observable and views (i.e. guiCardLayout
+	will implement Observer. Whenever the state changes in the model, it will notifyObservers();
+	
+In guiCardLayout, we can't add a listener to a button right when it's created, because we won't have
+	a reference to the controller yet. So add code in addController() that sets the controller passed
+	to it as a listener to some buttons.
+	
+Ideally what'll happen is:
+Program is started in main()
+In main() a call is made to some method in a class in the default package that will set up the MVC.
+In this method, guiCardLayout, guiController, applicationDataController, and any necessary models are
+	instantiated.
+Then call these methods:
+	guiCardLayout.addController(guiController);
+	guiCardLayout.addController(applicationDataController);
+	guiController.addView(guiCardLayout);
+	applicationDataController.addView(guiCardLayout);
+	model.addObserver(guiCardLayout);
