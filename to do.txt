@@ -20,26 +20,26 @@ save everything in a SQLite db
 
 mvc ideas
 Controllers will implement ActionListener
-Have two controllers: guiController and applicationDataController
+Have two controllers: guiController and modelController
 If the component triggered (button in my case) only changes the gui and doesn't need to interact with 
 	the model (e.g. a button is pressed that only switches screens), attach a guiController to it. The
 	guiController will then eventually call a method in guiCardLayout that will change to the appropriate
 	card.
 If the component triggered has to interact with the model (reading/writing from db), then attach a
-	applicationDataController to it. If it's a read event, the applicationDataController will need to 
+	modelController to it. If it's a read event, the modelController will need to 
 	determine what information will need to be read, then access the model to get that info. If it's a 
 	write event, then the controller will need to access guiCardLayout first to get this information. 
 	Probably do this by having a method for each "form" in the program, and if that method is called,
 	it will gather all the info from the appropriate J components and return it (e.g. 
 	getSaveAWorkoutFormInfo will access all of the JTextFields in the SaveAWorkout form). Once the
-	applicationDataController has all of this information, it will pass it on to the model, who then
+	modelController has all of this information, it will pass it on to the model, who then
 	decides what to do.
 	
 This all assumes that some parts of the mvc have references to other parts:
 guiCardLayout will have a reference to each of the controllers.
 	It will have a method called addController(controller) which will add a controller to some buttons
 		as a listener.
-	Any button created will either have a guiController or applicationDataController as an event listener
+	Any button created will either have a guiController or modelController as an event listener
 Each controller will have a reference to guiCardLayout and any appropriate models
 	They will have a method called addModel(model) and addView(view)
 Models don't have references to either.  Models will extend Observable and views (i.e. guiCardLayout
@@ -52,11 +52,51 @@ In guiCardLayout, we can't add a listener to a button right when it's created, b
 Ideally what'll happen is:
 Program is started in main()
 In main() a call is made to some method in a class in the default package that will set up the MVC.
-In this method, guiCardLayout, guiController, applicationDataController, and any necessary models are
+In this method, guiCardLayout, guiController, modelController, and any necessary models are
 	instantiated.
 Then call these methods:
 	guiCardLayout.addController(guiController);
-	guiCardLayout.addController(applicationDataController);
+	guiCardLayout.addController(modelController);
 	guiController.addView(guiCardLayout);
-	applicationDataController.addView(guiCardLayout);
+	modelController.addView(guiCardLayout);
 	model.addObserver(guiCardLayout);
+
+5/3/16
+Thinking about taking a modular approach to this also, however the way I’m writing seems to already be doing this
+guiCardLayout is basically a module that handles everything gui related
+Another module could be one that handles everything database related; this could be all put into a single class though
+Other than that there’s not any other modules really
+I guess I could restructure the packages though so that it reflects the modules
+Maybe have a module package, and in there have a gui package and database package
+controllers could be kept in a controllers package
+other objects (workout, measurement) could be kept in a package meant to just store generic objects related to the program (call it 	objects?)
+
+
+For everything button related, I can just add a controller that implements ActionLister as a listener to those buttons; however,
+	it’s a different story for viewing a past workout
+	for viewing a past workout, first a jlist with all past workouts is populated, then the user selects an option an the full
+		workout details appears on another screen
+	so obviously you have to add a MouseListener that listens for a mouseEvent to the jlist.
+	however, MouseListener doesn’t have anything to do with ActionListener; in java.util, (one of?) the highest up class is 
+		EventListener; ActionListener inherits from it, but so does MouseListener, so ActionListener and MouseListener are 		siblings
+	This means that all buttons will have a controller that implements ActionListener, and the jlists will have to have a 
+		separate controller that implements MouseListener
+
+For the view a past workout jlist and the controller:
+	user will click an option on the jlist
+	this code will be in the controller:
+		public void mouseClicked(MouseEvent e) {
+			JList list = (JList)e.getSource();
+	         if (e.getClickCount() == 2) {
+	        	//list.locationToIndex(e.getPoint());
+			list.getSelectedValue();
+	          }			
+		}
+	At first I was going to do option 1, which is:
+		MouseEvent e has the x and y coordinates of the mouse click
+		getPoint returns those coordinates
+		locationToIndex takes those coordinates and determines which element of the jlist those coordinates land on and returns 			the index of the element
+	however option 2 is better:
+		when the user double clicks a element, the item that they double clicked will be highlighted (aka selected) in the 
+			jlist; so calling getSelectedValue() on list will return that element as whatever type the jlist was made as 
+			(e.g. if it’s a jlist of strings, it’ll return a string)
